@@ -23,7 +23,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByNickName(username);
+        User user = userRepository.findByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("invalid username or password");
         }
@@ -35,7 +35,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
     private org.springframework.security.core.userdetails.User convertCustomUserToSpringUser(
             User user, Set<GrantedAuthority> authorities) {
         return new org.springframework.security.core.userdetails.User(
-                user.getNickName(),
+                user.getEmail(),
                 user.getPassword(),
                 user.getEnabled(),
                 true,

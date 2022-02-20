@@ -48,7 +48,7 @@ public class DefaultSecurityService implements SecurityService {
     }
 
     @Override
-    public boolean existsByUsername(String username) {
-        return userRepository.existsByNickName(username);
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

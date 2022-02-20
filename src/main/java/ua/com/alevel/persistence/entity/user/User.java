@@ -9,10 +9,10 @@ import javax.persistence.*;
 @Table(name = "users_table")
 public class User extends BaseEntity {
 
-    private String nickName;
-
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
     private Boolean enabled;
@@ -24,14 +24,6 @@ public class User extends BaseEntity {
     public User() {
         super();
         this.enabled = true;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
     }
 
     public String getEmail() {
