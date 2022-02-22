@@ -27,3 +27,6 @@ insert into vaccination_center_vaccine values (1, 4);
 insert into vaccination_center_vaccine values (1, 5);
 insert into vaccination_center_vaccine values (2, 1);
 insert into vaccination_center_vaccine values (2, 2);
+
+-- coronavirus_statistics_t
+insert into covid_api_statistics_table values (1, '4832005', '19586', '4943428', '19748', '2022-02-20', '111423', '162', '0.0225', '2022-02-21 04:21:05', '0', '0');

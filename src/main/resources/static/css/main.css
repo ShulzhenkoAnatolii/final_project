@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html,body {
+    /*background: url('https://wallpaperaccess.com/full/2348505.jpg') no-repeat center center fixed;*/
+    background: rgb(240, 240, 240);
+    background-size: cover;
+    height: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+
+a.nav-item.nav-link {
+    color: black;
+}
+
+.sort {
+    cursor: pointer;
+    margin-right: 2em;
+}
+
+.table_block {
+  border-radius: 1rem;
+  border: 2px solid #19c3e6;
+  display: block;
+}
