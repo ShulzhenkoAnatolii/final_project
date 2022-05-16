@@ -3,6 +3,7 @@ package ua.com.alevel.cron;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -28,7 +29,7 @@ public class CovidApiCron {
         this.covidApi = covidApi;
     }
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 6000000)
     public void askInformation() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<DataCovidDto> response = restTemplate.getForEntity(

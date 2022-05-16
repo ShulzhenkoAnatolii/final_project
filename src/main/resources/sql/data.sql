@@ -1,6 +1,12 @@
 -- vaccination_center_table
 insert into vaccination_center_table values (default,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(), 'ТЦ "ACADEM City" вул. Академіка Палладіна, буд. 16');
 insert into vaccination_center_table values (default,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(), 'БМ "Агромат" вул. Академіка Булаховського, буд. 4');
+insert into vaccination_center_table values (default, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 'ТЦ "ART Mall" вул. Академіка Заболотного, буд. 37');
+insert into vaccination_center_table values (default, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 'ТЦ "АЛАДДІН" вул. Михайла Гришка, буд. 3А');
+insert into vaccination_center_table values (default, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), '"Optimum busines center" вул. Полтавський шлях, буд. 56');
+insert into vaccination_center_table values (default, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 'ТРЦ "Французький бульвар" вул. Академіка Павлова, буд. 44Б');
+insert into vaccination_center_table values (default, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 'ТРЦ "Nikolsky" вул. Пушкінська, буд. 2');
+insert into vaccination_center_table values (default, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), 'ТРЦ "КАРАВАН" вул. Лугова, буд. 12');
 
 -- users_table
 insert into users_table values ('ADMIN', default, CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(), 'drobenko@gmail.com', 1, 'drobenko@gmail.com', 'ROLE_ADMIN',  null, null, null, null, null);
@@ -29,4 +35,4 @@ insert into vaccination_center_vaccine values (2, 1);
 insert into vaccination_center_vaccine values (2, 2);
 
 -- coronavirus_statistics_t
-insert into covid_api_statistics_table values (1, '4832005', '19586', '4943428', '19748', '2022-02-20', '111423', '162', '0.0225', '2022-02-21 04:21:05', '0', '0');
+--insert into covid_api_statistics_table values (1, '4832005', '19586', '4943428', '19748', '2022-02-20', '111423', '162', '0.0225', '2022-02-21 04:21:05', '0', '0');

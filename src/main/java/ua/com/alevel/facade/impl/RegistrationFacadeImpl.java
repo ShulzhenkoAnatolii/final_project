@@ -3,7 +3,7 @@ package ua.com.alevel.facade.impl;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.facade.RegistrationFacade;
 import ua.com.alevel.persistence.entity.user.Patient;
-import ua.com.alevel.service.PatientCrudService;
+import ua.com.alevel.service.user.PatientCrudService;
 import ua.com.alevel.view.dto.request.AuthDto;
 
 @Service

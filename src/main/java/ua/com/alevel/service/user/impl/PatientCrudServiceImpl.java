@@ -1,4 +1,4 @@
-package ua.com.alevel.service.impl;
+package ua.com.alevel.service.user.impl;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.alevel.persistence.entity.user.Patient;
 import ua.com.alevel.persistence.entity.util.RoleType;
 import ua.com.alevel.persistence.repository.user.PatientRepository;
-import ua.com.alevel.service.PatientCrudService;
+import ua.com.alevel.service.user.PatientCrudService;
 
 @Service
 public class PatientCrudServiceImpl implements PatientCrudService {

@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 public interface DoctorRepository extends UserRepository<Doctor> {
 
-    Page<Doctor> findAllByVaccinationCenter(VaccinationCenter vaccinationCenter, Pageable pageable);
+    Page<Doctor> findAllByVaccinationCenterId (Long id, Pageable pageable);
 
-    List<Doctor> findAllByVaccinationCenter(VaccinationCenter vaccinationCenter);
 }
