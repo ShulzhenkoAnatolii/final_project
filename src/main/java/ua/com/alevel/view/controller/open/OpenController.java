@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.com.alevel.persistence.entity.user.Doctor;
 import ua.com.alevel.persistence.entity.vaccinationdetails.VaccinationCenter;
 import ua.com.alevel.persistence.entity.vaccinationdetails.Vaccine;
+import ua.com.alevel.persistence.repository.vaccinationdetails.VaccinationCenterRepository;
 import ua.com.alevel.service.api.CovidApiStatisticsService;
 import ua.com.alevel.service.user.DoctorCrudService;
 import ua.com.alevel.service.vaccinationdetails.VaccinationCenterService;
 import ua.com.alevel.service.vaccinationdetails.VaccineService;
 
-import javax.servlet.Filter;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -31,12 +32,15 @@ public class OpenController {
     private final VaccinationCenterService vaccinationCenterService;
     private final DoctorCrudService doctorCrudService;
     private final VaccineService vaccineService;
+    private final VaccinationCenterRepository repository;
 
-    public OpenController(CovidApiStatisticsService apiService, VaccinationCenterService vaccinationCenterService, DoctorCrudService doctorCrudService, VaccineService vaccineService) {
+    public OpenController(CovidApiStatisticsService apiService, VaccinationCenterService vaccinationCenterService,
+                          DoctorCrudService doctorCrudService, VaccineService vaccineService, VaccinationCenterRepository repository) {
         this.apiService = apiService;
         this.vaccinationCenterService = vaccinationCenterService;
         this.doctorCrudService = doctorCrudService;
         this.vaccineService = vaccineService;
+        this.repository = repository;
     }
 
     @GetMapping
@@ -46,54 +50,56 @@ public class OpenController {
     }
 
     @GetMapping("/centres")
-    public String centresPage(Model model,
-                              @RequestParam(value = "page", required = false) Integer pageNumber,
-                              @RequestParam(value = "size", required = false) Integer pageSize,
-                              @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+    public String centresPage(Model model, HttpServletRequest request,
+                              @RequestParam(value = "page", required = false, defaultValue = "1") Integer pageNumber,
+                              @RequestParam(value = "size", required = false, defaultValue = "9") Integer pageSize,
+                              @RequestParam(value = "vaccine", required = false) List<Long> vaccinesParam
     ) {
-        if (pageNumber == null) pageNumber = 1;
-        if (pageSize == null) pageSize = 9;
 
-        Page<VaccinationCenter> centres = vaccinationCenterService.getPage(pageNumber, pageSize);
+        Page<VaccinationCenter> centres = vaccinationCenterService.getPage(pageNumber, pageSize, vaccinationCenterService.checkedVaccines(vaccinesParam));
         List<Vaccine> vaccineList = vaccineService.findAll();
 
+        String vaccineParam;
         int[] pageSizeItems = new int[]{9, 18, 36, 72};
         int[] pageIndex = IntStream.range(1, centres.getTotalPages() + 1).toArray();
-
         long startCount = (long) centres.getNumber() * centres.getSize() + 1;
         long endCount = (long) (centres.getNumber() + 1) * centres.getSize();
 
         if (endCount > centres.getTotalElements()) {
             endCount = centres.getTotalElements();
         }
+        if (vaccinesParam == null || vaccinesParam.isEmpty()) {
+            vaccineParam = "";
+        } else {
+            vaccineParam = "&vaccines" + request.getParameter("vaccines");
+        }
 
         model.addAttribute("startCount", startCount);
         model.addAttribute("endCount", endCount);
-        model.addAttribute("totalItems", centres.getTotalElements());
         model.addAttribute("vaccines", vaccineList);
-
         model.addAttribute("pageIndex", pageIndex);
         model.addAttribute("pageSizeItems", pageSizeItems);
+
+        model.addAttribute("centres", centres);
         model.addAttribute("currentPage", centres.getNumber());
         model.addAttribute("currentSize", centres.getSize());
-        model.addAttribute("centres", centres);
+        model.addAttribute("totalItems", centres.getTotalElements());
         model.addAttribute("totalPage", centres.getTotalPages());
+
         model.addAttribute("pageUrlPrefix", "/open/centres?page=");
         model.addAttribute("pageUrlPostfix", "&size=");
+        model.addAttribute("url", "/open/centres?page=1&size=" + pageSize);
+        model.addAttribute("vaccineParam", vaccineParam);
 
         return "pages/open/all_centers";
     }
 
     @GetMapping("centres/{id}")
     public String centersDetails(@PathVariable Long id, Model model,
-                                 @RequestParam(value = "page", required = false) Integer pageNumber,
-                                 @RequestParam(value = "size", required = false) Integer pageSize,
-                                 @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        if (pageNumber == null) pageNumber = 1;
-        if (pageSize == null) pageSize = 10;
+                                 @RequestParam(value = "page", required = false, defaultValue = "1") Integer pageNumber,
+                                 @RequestParam(value = "size", required = false, defaultValue = "4") Integer pageSize) {
 
         Optional<VaccinationCenter> vaccinationCenter = vaccinationCenterService.findById(id);
-        //Page<Doctor> doctors = doctorCrudService.getPage(pageNumber, pageSize);
         Page<Doctor> doctors = doctorCrudService.getDoctorsPageByVaccinationCenter(vaccinationCenter.get(), pageNumber, pageSize);
 
         int[] pageSizeItems = new int[]{10, 25, 50, 100};
@@ -113,7 +119,6 @@ public class OpenController {
 
         model.addAttribute("startCount", startCount);
         model.addAttribute("endCount", endCount);
-
         model.addAttribute("pageIndex", pageIndex);
         model.addAttribute("pageSizeItems", pageSizeItems);
 
@@ -127,8 +132,5 @@ public class OpenController {
         model.addAttribute("pageUrlPostfix", "&size=");
 
         return "pages/open/centers_details";
-
     }
-
-
 }

@@ -13,10 +13,14 @@
 <div layout:fragment="open_content">
 
     <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-2 ps-3 pb-3">
-            <div th:each="i : ${vaccines}" class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                <label class="form-check-label" for="flexSwitchCheckChecked">[[${i}]]</label>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-6 g-2 ps-3 pb-3">
+            <div th:each="vaccine : ${vaccines}" class="form-check form-switch">
+                <input class="form-check-input" type="checkbox"
+                       th:onchange="runFilter()"
+                       th:id="${vaccine.getId()}"
+                       th:checked="${vaccine.isFilter()}">
+                <label class="form-check-label"
+                       th:text="${vaccine.getName()}"></label>
             </div>
         </div>
 
@@ -116,14 +120,33 @@
                 <li class="page-item">
                     <a class="page-link" href="#">Items in page</a>
                 </li>
-                <li th:each="i : ${pageSizeItems}">
+                <li th:each="i : ${pageSizeItems}"
+                    th:classappend="${currentSize == i ? 'page-item active' : 'page-item'}">
                     <a class="page-link"
                        th:href="@{${pageUrlPrefix + 1 + pageUrlPostfix + i}}">[[${i}]]</a>
                 </li>
             </ul>
         </div>
     </div>
+    <script th:inline="javascript">
+    function runFilter() {
+        var checkboxes = document.getElementsByClassName('form-check-input');
+        var url = [[${url}]];
+        var key = false;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                if (key == false) url = url + '&vaccine=';
+                key = true;
+                url = url + checkboxes[i].id + ",";
+            }
+        }
+        if (url.charAt(url.length - 1) == ','){
+            url = url.slice(0, -1);
+        }
+        document.location.href = url;
+    }
 
+    </script>
 
 </div>
 </body>

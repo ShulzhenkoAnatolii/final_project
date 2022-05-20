@@ -6,6 +6,7 @@ import ua.com.alevel.persistence.repository.vaccinationdetails.VaccineRepository
 import ua.com.alevel.service.vaccinationdetails.VaccineService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VaccineServiceImpl implements VaccineService {
@@ -27,8 +28,11 @@ public class VaccineServiceImpl implements VaccineService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) { }
 
+    @Override
+    public Optional<Vaccine> findById(Long id) {
+        return vaccineRepository.findById(id);
     }
 
     @Override

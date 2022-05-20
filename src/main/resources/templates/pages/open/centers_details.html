@@ -128,7 +128,8 @@
                 <li class="page-item">
                     <a class="page-link" href="#">Items in page</a>
                 </li>
-                <li th:each="i : ${pageSizeItems}">
+                <li th:each="i : ${pageSizeItems}"
+                    th:classappend="${currentSize == i ? 'page-item active' : 'page-item'}">
                     <a class="page-link"
                        th:href="@{${pageUrlPrefix + 1 + pageUrlPostfix + i}}">[[${i}]]</a>
                 </li>
