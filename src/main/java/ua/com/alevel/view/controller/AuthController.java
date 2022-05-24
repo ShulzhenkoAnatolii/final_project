@@ -55,7 +55,6 @@ public class AuthController extends BaseController {
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        System.out.println("Hello");
         if (securityService.isAuthenticated()) {
             return redirectProcess(model);
         }

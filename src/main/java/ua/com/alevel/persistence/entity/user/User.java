@@ -2,6 +2,7 @@ package ua.com.alevel.persistence.entity.user;
 
 import ua.com.alevel.persistence.entity.BaseEntity;
 import ua.com.alevel.persistence.entity.util.RoleType;
+import ua.com.alevel.persistence.entity.util.SexType;
 
 import javax.persistence.*;
 
@@ -20,6 +21,10 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role_type", nullable = false)
     private RoleType roleType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sex_type", nullable = false)
+    private SexType sexType;
 
     public User() {
         super();
@@ -56,5 +61,13 @@ public class User extends BaseEntity {
 
     public void setRoleType(RoleType roleType) {
         this.roleType = roleType;
+    }
+
+    public SexType getSexType() {
+        return sexType;
+    }
+
+    public void setSexType(SexType sexType) {
+        this.sexType = sexType;
     }
 }

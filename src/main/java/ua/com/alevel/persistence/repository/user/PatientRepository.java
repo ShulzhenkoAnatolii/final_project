@@ -5,4 +5,6 @@ import ua.com.alevel.persistence.entity.user.Patient;
 
 @Repository
 public interface PatientRepository extends UserRepository<Patient> {
+
+    Patient findByEmail (String email);
 }

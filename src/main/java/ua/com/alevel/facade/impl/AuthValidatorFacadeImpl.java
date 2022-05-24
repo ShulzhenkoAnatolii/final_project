@@ -25,7 +25,7 @@ public class AuthValidatorFacadeImpl implements AuthValidatorFacade {
     public void validate(Object target, Errors errors) {
         AuthDto dto = (AuthDto) target;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
-        if (dto.getEmail().length() < 6 || dto.getEmail().length() > 32) {
+        if (dto.getEmail().length() < 3 || dto.getEmail().length() > 32) {
             errors.rejectValue("username", "Size.authForm.username");
         }
 
@@ -33,7 +33,7 @@ public class AuthValidatorFacadeImpl implements AuthValidatorFacade {
             errors.rejectValue("username", "Duplicate.authForm.username");
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
-        if (dto.getPassword().length() < 8 || dto.getPassword().length() > 32) {
+        if (dto.getPassword().length() < 3 || dto.getPassword().length() > 32) {
             errors.rejectValue("password", "Size.authForm.password");
         }
         if (!dto.getPasswordConfirm().equals(dto.getPassword())) {

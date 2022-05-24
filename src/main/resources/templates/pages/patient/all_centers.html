@@ -10,46 +10,37 @@
 </head>
 
 <body>
-<div layout:fragment="open_content">
+<div layout:fragment="patient_content">
 
     <div class="container">
-        <div class="row row-cols-md-2">
-            <div class="card shadow-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="185" fill="currentColor"
-                     class="bi bi-hospital" viewBox="0 0 15 15">
-                    <path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1h1ZM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5Zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9h-.5Zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Z"></path>
-                    <path d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1V1Zm2 14h2v-3H7v3Zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3Zm0-14H6v1h4V1Zm2 7v7h3V8h-3Zm-8 7V8H1v7h3Z"></path>
-                    <div class="card-body">
-                        <center><p th:text="${address}" class="card-text"></p></center>
-                    </div>
-                </svg>
-            </div>
-            <div class="card shadow-sm">
-                <h3><p class="card-text">Available vaccines</p></h3>
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-success"
-                        th:each="i : ${vaccines}">
-                        <p class="card-text">[[${i.getName()}]]</p>
-                    </li>
-                </ul>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-6 g-2 ps-3 pb-3">
+            <div th:each="vaccine : ${vaccines}" class="form-check form-switch">
+                <input class="form-check-input" type="checkbox"
+                       th:onchange="runFilter()"
+                       th:id="${vaccine.getId()}"
+                       th:checked="${vaccine.isFilter()}">
+                <label class="form-check-label"
+                       th:text="${vaccine.getName()}"></label>
             </div>
         </div>
-    </div>
-    <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2">
-            <div th:each="items : ${doctors}" class="col">
-                <div class="card shadow-sm p-5">
-                    <h3><p class="card-text">[[${items.getFirstName()}]] [[${items.getLastName()}]]
-                        [[${items.getPatronymic()}]]</p></h3>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30%" height="175" fill="currentColor"
-                         class="bi bi-person-hearts" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                              d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566ZM9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z"/>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-1">
+            <div th:each="centres : ${centres}" class="col">
+                <div class="card shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="225" fill="currentColor"
+                         class="bi bi-hospital" viewBox="0 0 20 20">
+                        <path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1h1ZM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5Zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9h-.5Zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Z"></path>
+                        <path d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1V1Zm2 14h2v-3H7v3Zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3Zm0-14H6v1h4V1Zm2 7v7h3V8h-3Zm-8 7V8H1v7h3Z"></path>
                     </svg>
-                    <div class="btn-group">
-                        <a th:href="@{${'/open/centres/'}}">
-                            <button type="button" class="btn btn-info">Registration For Vaccination</button>
-                        </a>
+                    <div class="card-body">
+                        <p th:text="${centres.getAddress()}" class="card-text"></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a th:href="@{${'/patient/centres/' + centres.getId()}}">
+                                    <button type="button" class="btn btn-info">Details</button>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,7 +67,8 @@
                 <th:block th:if="${totalPage <= 10}">
                     <li th:each="i : ${#numbers.sequence(1,totalPage)}"
                         th:class="${currentPage != i - 1 ? 'page-item' : 'page-item active'}">
-                        <a th:href="@{${pageUrlPrefix} + ${i} + ${pageUrlPostfix} + ${currentSize}}" class="page-link">[[${i}]]</a>
+                        <a th:href="@{${pageUrlPrefix} + ${i} + ${pageUrlPostfix} + ${currentSize}}"
+                           class="page-link">[[${i}]]</a>
                     </li>
                 </th:block>
 
@@ -136,6 +128,25 @@
             </ul>
         </div>
     </div>
+    <script th:inline="javascript">
+    function runFilter() {
+        var checkboxes = document.getElementsByClassName('form-check-input');
+        var url = [[${url}]];
+        var key = false;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                if (key == false) url = url + '&vaccine=';
+                key = true;
+                url = url + checkboxes[i].id + ",";
+            }
+        }
+        if (url.charAt(url.length - 1) == ','){
+            url = url.slice(0, -1);
+        }
+        document.location.href = url;
+    }
+    </script>
+
 </div>
 </body>
 </html>

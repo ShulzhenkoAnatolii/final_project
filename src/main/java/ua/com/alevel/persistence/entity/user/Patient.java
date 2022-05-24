@@ -3,7 +3,9 @@ package ua.com.alevel.persistence.entity.user;
 import ua.com.alevel.persistence.entity.vaccinationdetails.Recording;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 
 @Entity
 @DiscriminatorValue("PATIENT")
@@ -14,10 +16,20 @@ public class Patient extends User {
     private String patronymic;
 
     @Column(name = "date_of_birth")
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "patient")
     private Recording recording;
+
+    @Transient
+    public String getFullName() {
+        return firstName + " " + lastName + " " + patronymic;
+    }
+
+    @Transient
+    public int getCurrentAge() {
+        return Period.between(dateOfBirth, LocalDate.from(LocalDateTime.now())).getYears();
+    }
 
     public String getFirstName() {
         return firstName;
@@ -43,11 +55,11 @@ public class Patient extends User {
         this.patronymic = patronymic;
     }
 
-    public LocalDateTime getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDateTime dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

@@ -37,7 +37,7 @@ public abstract class BaseController {
         model.addAttribute("showMessage", show);
     }
 
-    protected void showMessage(RedirectAttributes redirectAttributes, boolean show) {
+    /*protected void showMessage(RedirectAttributes redirectAttributes, boolean show) {
         redirectAttributes.addFlashAttribute("showMessage", show);
-    }
+    }*/
 }
