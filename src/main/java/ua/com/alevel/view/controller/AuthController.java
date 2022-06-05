@@ -1,5 +1,6 @@
 package ua.com.alevel.view.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,20 +15,12 @@ import ua.com.alevel.util.SecurityUtil;
 import ua.com.alevel.view.dto.request.AuthDto;
 
 @Controller
+@AllArgsConstructor
 public class AuthController extends BaseController {
 
     private final RegistrationFacade registrationFacade;
     private final AuthValidatorFacade authValidatorFacade;
     private final SecurityService securityService;
-
-    public AuthController(
-            RegistrationFacade registrationFacade,
-            AuthValidatorFacade authValidatorFacade,
-            SecurityService securityService) {
-        this.registrationFacade = registrationFacade;
-        this.authValidatorFacade = authValidatorFacade;
-        this.securityService = securityService;
-    }
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {

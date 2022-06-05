@@ -1,5 +1,7 @@
 package ua.com.alevel.persistence.entity.user;
 
+import lombok.Data;
+import ua.com.alevel.persistence.entity.util.SexType;
 import ua.com.alevel.persistence.entity.vaccinationdetails.Recording;
 
 import javax.persistence.*;
@@ -8,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 
 @Entity
+@Data
 @DiscriminatorValue("PATIENT")
 public class Patient extends User {
 
@@ -21,53 +24,20 @@ public class Patient extends User {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "patient")
     private Recording recording;
 
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sex_type", nullable = false)
+    private SexType sexType;
+
+    public Patient() {
+        super();
+    }
+
     public String getFullName() {
         return firstName + " " + lastName + " " + patronymic;
     }
 
-    @Transient
     public int getCurrentAge() {
         return Period.between(dateOfBirth, LocalDate.from(LocalDateTime.now())).getYears();
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPatronymic() {
-        return patronymic;
-    }
-
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Recording getRecording() {
-        return recording;
-    }
-
-    public void setRecording(Recording recording) {
-        this.recording = recording;
-    }
 }

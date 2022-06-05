@@ -1,5 +1,6 @@
 package ua.com.alevel.view.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,20 +15,13 @@ import ua.com.alevel.persistence.repository.user.DoctorRepository;
 import ua.com.alevel.persistence.repository.user.PatientRepository;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping()
 public class MainController {
 
     private final DoctorRepository doctorRepository;
     private final AdminRepository adminRepository;
     private final PatientRepository patientRepository;
-
-    public MainController(DoctorRepository doctorRepository,
-                          AdminRepository adminRepository,
-                          PatientRepository patientRepository) {
-        this.doctorRepository = doctorRepository;
-        this.adminRepository = adminRepository;
-        this.patientRepository = patientRepository;
-    }
 
     @GetMapping
     public String dashboard(Model model) {

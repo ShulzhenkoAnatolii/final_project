@@ -16,6 +16,8 @@ public interface VaccinationCenterRepository extends BaseRepository<VaccinationC
 
     Page<VaccinationCenter> findAll(Pageable pageable);
 
+    List<VaccinationCenter> findAll();
+
     Optional<VaccinationCenter> findById(Long id);
 
     List<VaccinationCenter> findDistinctVaccinationCenterByVaccinesIn(Iterable vaccines);

@@ -16,5 +16,7 @@ public interface VaccinationCenterService extends CrudService<VaccinationCenter>
 
     Optional<VaccinationCenter> findById(Long id);
 
+    List<VaccinationCenter> findAll();
+
     List<Vaccine> checkedVaccines(List<Long> vaccinesParam);
 }

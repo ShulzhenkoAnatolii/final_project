@@ -65,6 +65,11 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService {
         return repository.findById(id);
     }
 
+    @Override
+    public List<VaccinationCenter> findAll() {
+        return repository.findAll();
+    }
+
     public List<Vaccine> checkedVaccines (List<Long> vaccinesParam) {
 
         List<Vaccine> checkedVaccines = new ArrayList<>();

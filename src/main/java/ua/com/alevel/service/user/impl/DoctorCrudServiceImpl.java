@@ -16,6 +16,7 @@ import ua.com.alevel.persistence.repository.user.DoctorRepository;
 import ua.com.alevel.service.user.DoctorCrudService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DoctorCrudServiceImpl implements DoctorCrudService {
@@ -45,6 +46,11 @@ public class DoctorCrudServiceImpl implements DoctorCrudService {
     public void delete(Long id) { }
 
     @Override
+    public Optional<Doctor> findById(Long id) {
+        return doctorRepository.findById(id);
+    }
+
+    @Override
     public Page<Doctor> findAllByVaccinationCenterId(Long id, Pageable pageable) {
         return doctorRepository.findAllByVaccinationCenterId(id, pageable);
     }
@@ -61,5 +67,10 @@ public class DoctorCrudServiceImpl implements DoctorCrudService {
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), doctors.size());
         return new PageImpl<>(doctors.subList(start, end), pageable, doctors.size());
+    }
+
+    @Override
+    public List<Doctor> findAll() {
+        return doctorRepository.findAll();
     }
 }

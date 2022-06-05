@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/content}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div layout:fragment="patient_content">
+
+    <div class="card-body">
+        <form id="recordForm" th:action="@{recording/create}" th:object="${recordForm}" method="post">
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input th:value="${patient.getFirstName()}"
+                           name="firstName"
+                           type="text" class="form-control" id="firstName" placeholder="Enter you First Name">
+                </div>
+                <div class="col-md-3">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input th:value="${patient.getLastName()}"
+                           name="lastName"
+                           type="text" class="form-control" id="lastName" placeholder="Enter you Last Name">
+                </div>
+                <div class="col-md-3">
+                    <label for="patronymic" class="form-label">Patronymic</label>
+                    <input th:value="${patient.getPatronymic()}"
+                           name="patronymic"
+                           type="text" class="form-control" id="patronymic" placeholder="Enter you Patronymic">
+                </div>
+                <div class="col-md-3">
+                    <label for="patronymic" class="form-label">Date of Birth</label>
+                    <input th:value="${patient.getDateOfBirth()}"
+                           name="birthday"
+                           type="date" class="form-control" id="dateOfBirth" placeholder="Enter you Date of Birth">
+                </div>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="date" class="form-control" id="selectedDate"
+                       th:disabled="${selectedClinicId == 0 || selectedDoctorId == 0 || selectedDoctorId == null}"
+                       th:value="${MIN_DATE}"
+                       th:min="${MIN_DATE}"
+                       th:max="${MAX_DATE}"
+                       name="selectedDate"
+                       placeholder="Enter Date">
+            </div>
+
+            <div th:each="time: ${timeList}" class="form-check form-check-inline">
+                <input th:checked="${time.equals(selectedTime)}"
+                       th:disabled="${selectedClinicId == 0 || selectedDoctorId == 0 || selectedDoctorId == null}"
+                       th:value="${time}"
+                       type="radio" name="selectedTime" class="form-check-input">
+                <label class="form-check-label">[[${time}]]</label>
+            </div>
+        </form>
+
+
+        <form id="clinicSelector" th:action="@{recording/update}" method="post">
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="clinic" class="form-label">Clinic</label>
+                    <select onchange="document.forms['clinicSelector'].submit()" id="clinic" class="form-select"
+                            th:name="selectedClinicId">
+                        <option th:value="${0}">--Select clinic--</option>
+                        <option th:each="clinic: ${clinics}"
+                                th:value="${clinic.getId()}"
+                                th:selected="${clinic.getId().equals(selectedClinicId)}"
+                                th:text="${clinic.getAddress()}">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="doctor" class="form-label">Doctor</label>
+                    <select onchange="document.forms['clinicSelector'].submit()" id="doctor" class="form-select"
+                            th:disabled="${doctors == null}"
+                            th:name="selectedDoctorId">
+                        <option th:value="${0}">--Select doctor--</option>
+                        <option
+                                th:each="doctor: ${doctors}"
+                                th:value="${doctor.getId()}"
+                                th:selected="${doctor.getId().equals(selectedDoctorId)}"
+                                th:text="${doctor.getFullName()}">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="vaccine" class="form-label">Vaccine</label>
+                    <select onchange="document.forms['clinicSelector'].submit()" id="vaccine" class="form-select"
+                            th:disabled="${vaccines == null}"
+                            th:name="selectedVaccineId">
+                        <option th:value="${0}">--Select vaccine--</option>
+                        <option
+                                th:each="vaccine: ${vaccines}"
+                                th:value="${vaccine.getId()}"
+                                th:selected="${vaccine.getId().equals(selectedVaccineId)}"
+                                th:text="${vaccine.getName()}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <div class="col-12 mt-3">
+            <button onclick="document.forms['recordForm'].submit()" type="submit" class="btn btn-outline-primary">
+                Make an appointment
+            </button>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

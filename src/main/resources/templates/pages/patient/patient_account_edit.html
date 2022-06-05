@@ -43,7 +43,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
                                     <div class="form-group">
                                         <label for="firstName">First Name</label>
-                                        <input th:value="${patient.getFirstName()}" type="text" class="form-control"
+                                        <input th:value="${patient.getFirstName()}" type="text" class="form-control mt-2"
                                                id="firstName"
                                                name="firstName"
                                                placeholder="Enter First Name">
@@ -52,7 +52,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
                                     <div class="form-group">
                                         <label for="lastName">Last Name</label>
-                                        <input th:value="${patient.getLastName()}" type="text" class="form-control"
+                                        <input th:value="${patient.getLastName()}" type="text" class="form-control mt-2"
                                                id="lastName"
                                                name="lastName"
                                                placeholder="Enter Last Name">
@@ -61,7 +61,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
                                     <div class="form-group">
                                         <label for="patronymic">Patronymic</label>
-                                        <input th:value="${patient.getPatronymic()}" type="text" class="form-control"
+                                        <input th:value="${patient.getPatronymic()}" type="text" class="form-control mt-2"
                                                id="patronymic"
                                                name="patronymic"
                                                placeholder="Enter Patronymic">
@@ -69,8 +69,22 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
                                     <div class="form-group">
-                                        <label th:value="${patient.getEmail()}" for="eMail">Email</label>
-                                        <input type="email" class="form-control" id="eMail" placeholder="Enter email">
+                                        <label for="dateOfBirth">Date of Birth</label>
+                                        <input th:value="${patient.getDateOfBirth()}" type="date" class="form-control mt-2"
+                                               id="dateOfBirth"
+                                               name="dateOfBirth"
+                                               placeholder="Enter you Date of Birth">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
+                                    <div class="form-group">
+                                        <label for="dateOfBirth">Gender</label>
+                                        <select class="form-select mt-2" name="sexType">
+                                            <option th:each="gender : ${T(ua.com.alevel.persistence.entity.util.SexType).values()}"
+                                                    th:text="${gender.displayText}"
+                                                    th:value="${gender}">
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

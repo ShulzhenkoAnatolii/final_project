@@ -1,9 +1,7 @@
 package ua.com.alevel.view.controller.open;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.com.alevel.persistence.entity.user.Doctor;
 import ua.com.alevel.persistence.entity.vaccinationdetails.VaccinationCenter;
 import ua.com.alevel.persistence.entity.vaccinationdetails.Vaccine;
-import ua.com.alevel.persistence.repository.vaccinationdetails.VaccinationCenterRepository;
 import ua.com.alevel.service.api.CovidApiStatisticsService;
 import ua.com.alevel.service.user.DoctorCrudService;
 import ua.com.alevel.service.vaccinationdetails.VaccinationCenterService;
@@ -25,6 +22,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/open")
 public class OpenController {
 
@@ -32,16 +30,6 @@ public class OpenController {
     private final VaccinationCenterService vaccinationCenterService;
     private final DoctorCrudService doctorCrudService;
     private final VaccineService vaccineService;
-    private final VaccinationCenterRepository repository;
-
-    public OpenController(CovidApiStatisticsService apiService, VaccinationCenterService vaccinationCenterService,
-                          DoctorCrudService doctorCrudService, VaccineService vaccineService, VaccinationCenterRepository repository) {
-        this.apiService = apiService;
-        this.vaccinationCenterService = vaccinationCenterService;
-        this.doctorCrudService = doctorCrudService;
-        this.vaccineService = vaccineService;
-        this.repository = repository;
-    }
 
     @GetMapping
     public String dashboard(Model model) {
